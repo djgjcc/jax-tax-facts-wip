@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jax Tax Facts — Try the Budget</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Public Sans', system-ui, sans-serif; background: #FCFCFD; color: #16262A; }
+  h1, h2, h3 { font-family: 'Source Serif 4', Georgia, serif; margin: 0; color: #053A40; }
+  p { margin: 0; line-height: 1.6; }
+  a { color: #01676E; }
+  a:hover { color: #1FC98D; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 48px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #01676E; }
+
+  /* Header */
+  .hdr { background: #053A40; height: 88px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-name { color: #FCFCFD; font-weight: 700; font-size: 16px; letter-spacing: 0.01em; }
+  .nav { display: flex; align-items: center; gap: 4px; }
+  .nav a { text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; color: #EAF6F4; }
+  .nav a:hover { opacity: 0.85; color: #EAF6F4; }
+  .nav a.active { background: #1FC98D; color: #053A40; font-weight: 800; }
+  .nav a.active:hover { color: #053A40; }
+
+  /* Footer */
+  .ftr { background: #053A40; padding: 56px 48px 32px; }
+  .ftr-inner { max-width: 1120px; margin: 0 auto; }
+  .ftr h4 { font-family: 'Source Serif 4', Georgia, serif; color: #FCFCFD; font-size: 17px; font-weight: 600; margin: 0 0 14px; }
+  .ftr-links { display: flex; flex-direction: column; gap: 10px; }
+  .ftr-links a { color: #CDE9E5; font-size: 14px; font-weight: 500; text-decoration: none; }
+  .ftr-links a:hover { color: #1FC98D; }
+  .ftr-bottom { max-width: 1120px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid #0B4F57; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .ftr-bottom p { color: #6FA39C; font-size: 12.5px; }
+
+  .pagehead { padding: 60px 0 36px; }
+  .pagehead h1 { font-size: 36px; font-weight: 600; margin-top: 14px; max-width: 740px; }
+  .pagehead .sub { font-size: 16px; color: #445255; max-width: 700px; margin-top: 14px; }
+
+  .panel { padding: 0 0 72px; }
+
+  .summary { background: #053A40; border-radius: 14px; padding: 30px 34px; margin-bottom: 28px; }
+  .summary-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+  .summary-top .label { color: #B9DAD3; font-size: 13.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+  .summary-top .val { color: #FCFCFD; font-family: 'Source Serif 4', Georgia, serif; font-size: 22px; font-weight: 700; }
+  .progress-track { height: 14px; background: #0B4F57; border-radius: 8px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #1FC98D; border-radius: 8px; width: 0%; transition: width 0.15s ease; }
+  .summary-foot { display: flex; justify-content: space-between; margin-top: 10px; flex-wrap: wrap; gap: 6px; }
+  .summary-foot span { color: #9FC7C2; font-size: 12.5px; }
+
+  .banner { border-radius: 10px; padding: 18px 24px; margin-bottom: 28px; font-size: 14.5px; }
+  .banner-progress { background: #F2FAF9; color: #33474A; }
+  .banner-reached { background: #FBEFED; color: #7A2A20; font-weight: 600; }
+  .hidden { display: none; }
+
+  .actions { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
+  .btn-mint { background: #1FC98D; color: #053A40; font-weight: 700; padding: 12px 22px; border-radius: 6px; font-size: 14px; border: none; cursor: pointer; }
+  .btn-ghost { background: transparent; color: #053A40; font-weight: 700; padding: 11px 20px; border-radius: 6px; font-size: 14px; border: 1.5px solid #C7D8D6; cursor: pointer; }
+
+  .locked-head { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #8A9698; margin: 6px 0 12px; }
+  .locked-grid { margin-bottom: 34px; }
+  .locked-card { background: #F1F3F3; border-radius: 10px; padding: 20px 22px; display: flex; justify-content: space-between; align-items: center; opacity: 0.85; max-width: 480px; gap: 16px; }
+  .locked-card h4 { font-size: 15px; font-weight: 700; color: #5C6C6F; margin: 0 0 4px; }
+  .locked-card p { font-size: 12.5px; color: #8A9698; }
+  .locked-card .amt { font-family: 'Source Serif 4', Georgia, serif; font-size: 20px; font-weight: 700; color: #5C6C6F; white-space: nowrap; }
+
+  .adj-head { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #01676E; margin: 6px 0 12px; }
+  .dept { border: 1px solid #E4EFEE; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
+  .dept.placeholder { border-style: dashed; border-color: #C9D6D5; background: #FAFCFB; }
+  .dept-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 16px; }
+  .dept-name { font-size: 15.5px; font-weight: 700; color: #16262A; }
+  .dept-sub { font-size: 12.5px; color: #8A9698; margin-top: 2px; max-width: 520px; }
+  .dept-tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-top: 6px; }
+  .dept-nums { text-align: right; flex-shrink: 0; }
+  .dept-budget { font-size: 12px; color: #8A9698; }
+  .dept-cut { font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; font-weight: 700; color: #B23A2E; }
+  .dept input[type=range] { width: 100%; accent-color: #1FC98D; }
+  .dept-pct { font-size: 12px; color: #5C6C6F; margin-top: 6px; }
+
+  @media (max-width: 900px) {
+    .hdr { flex-direction: column; height: auto; padding: 16px 24px; gap: 12px; }
+    .wrap { padding: 0 24px; }
+    .dept-top { flex-direction: column; }
+    .dept-nums { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="hdr">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="17" cy="17" r="16" stroke="#1FC98D" stroke-width="2"/>
+        <path d="M17 3 C22 9 22 25 17 31" stroke="#1FC98D" stroke-width="2" fill="none"/>
+        <path d="M17 3 C12 9 12 25 17 31" stroke="#1FC98D" stroke-width="2" fill="none"/>
+        <path d="M2 17 L32 17" stroke="#1FC98D" stroke-width="2"/>
+      </svg>
+      <span class="brand-name">JAX TAX FACTS</span>
+    </div>
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="impact.html">Local Impact</a>
+      <a href="budget-tool.html" class="active">Try the Budget</a>
+    </div>
+  </div>
+
+  <div class="pagehead">
+    <div class="wrap">
+      <span class="eyebrow">TRY IT YOURSELF</span>
+      <h1>Try balancing the budget</h1>
+      <p class="sub">Jacksonville needs to close a $300 million gap. Debt service and pension obligations are fixed by contract. Everything else &mdash; including public safety &mdash; is fair game below. See what it actually takes.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="wrap">
+
+      <div class="summary">
+        <div class="summary-top">
+          <span class="label">Gap Closed</span>
+          <span class="val">$<span id="totalCut">0</span>M of $300M</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="summary-foot">
+          <span><span id="gapClosedPct">0</span>% of the $300M gap</span>
+          <span><span id="poolUsedPct">0</span>% of the $1,741M adjustable budget eliminated</span>
+        </div>
+      </div>
+
+      <div class="banner banner-reached hidden" id="bannerReached">
+        You just closed the $300M gap &mdash; by cutting roughly <span id="reachedPoolPct">0</span>% of the budget shown below. Adjust the sliders to see how much of that had to come from public safety versus everything else.
+      </div>
+      <div class="banner banner-progress" id="bannerProgress">
+        $<span id="remaining">300</span>M left to close the gap. Keep adjusting the sliders below &mdash; or use "Spread Evenly" to see what an even cut across every category looks like.
+      </div>
+
+      <div class="actions">
+        <button class="btn-mint" onclick="spreadEvenly()">Spread Evenly to $300M</button>
+        <button class="btn-ghost" onclick="resetAll()">Reset</button>
+      </div>
+
+      <div class="locked-head">Fixed by contract &mdash; not a yearly choice</div>
+      <div class="locked-grid">
+        <div class="locked-card">
+          <div><h4>Debt &amp; Pension Obligations</h4><p>Bond payments and required pension contributions</p></div>
+          <div class="amt">$287M</div>
+        </div>
+      </div>
+
+      <div class="adj-head">Adjustable &mdash; everything else the General Fund pays for, including public safety ($1,741M total)</div>
+      <div id="deptList"></div>
+
+    </div>
+  </div>
+
+  <div class="ftr">
+    <div class="ftr-inner">
+      <div>
+        <h4>On this site</h4>
+        <div class="ftr-links">
+          <a href="index.html">Home</a>
+          <a href="impact.html">Local Impact</a>
+          <a href="budget-tool.html">Try the Budget</a>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <p>&copy; 2026 Jax Tax Facts, a project of the Jacksonville Civic Council. For public education purposes; not legal, tax, or financial advice.</p>
+      <p>Jacksonville, Florida</p>
+    </div>
+  </div>
+
+<script>
+  var DEPTS = [
+    { key: 'publicsafety', label: 'Public Safety', sub: "Jacksonville Sheriff's Office & Fire-Rescue", budget: 1050, tag: 'Largest line item' },
+    { key: 'publicworks', label: 'Public Works', sub: 'Roads, sidewalks, stormwater, and infrastructure maintenance', budget: 63.5 },
+    { key: 'parks', label: 'Parks & Recreation', sub: 'Parks, community centers, and recreation programs', budget: 57.2 },
+    { key: 'libraries', label: 'Public Libraries', sub: 'Branches, programs, and materials', budget: 39.0 },
+    { key: 'admin', label: 'Administrative Services', sub: 'Solid waste collection and administrative operations', budget: 16.0 },
+    { key: 'neighborhoods', label: 'Neighborhoods', sub: 'Animal care, code enforcement, and MyJax resident services', budget: 12.2 },
+    { key: 'planning', label: 'Planning & Development', sub: 'Permitting and development review', budget: 4.6 },
+    { key: 'econdev', label: 'Economic Development', sub: 'Business and economic development programs', budget: 3.3 },
+    { key: 'military', label: 'Military Affairs & Veterans', sub: 'Veteran and military family services', budget: 1.7 },
+    { key: 'sports', label: 'Sports & Entertainment', sub: 'City venues and events', budget: 1.1 },
+    { key: 'other', label: 'Other General Fund Programs', sub: 'Health & human services, general government, capital and one-time funding', budget: 492.4, placeholder: true, tag: 'Illustrative — pending full breakdown' }
+  ];
+
+  var POOL = 1741;
+  var TARGET = 300;
+  var cuts = {};
+  DEPTS.forEach(function (d) { cuts[d.key] = 0; });
+
+  function buildRows() {
+    var container = document.getElementById('deptList');
+    container.innerHTML = '';
+    DEPTS.forEach(function (d) {
+      var row = document.createElement('div');
+      row.className = 'dept' + (d.placeholder ? ' placeholder' : '');
+      row.style.borderStyle = d.placeholder ? 'dashed' : 'solid';
+      row.id = 'dept-' + d.key;
+
+      var tagHtml = '';
+      if (d.tag) {
+        var tagColor = d.placeholder ? '#B08A3E' : '#0F6A52';
+        var tagBg = d.placeholder ? '#FBF2DF' : '#E4F3EC';
+        tagHtml = '<div class="dept-tag" style="color:' + tagColor + '; background:' + tagBg + ';">' + d.tag + '</div>';
+      }
+
+      row.innerHTML =
+        '<div class="dept-top">' +
+          '<div>' +
+            '<div class="dept-name">' + d.label + '</div>' +
+            '<div class="dept-sub">' + d.sub + '</div>' +
+            tagHtml +
+          '</div>' +
+          '<div class="dept-nums">' +
+            '<div class="dept-budget">Budget: $' + d.budget.toFixed(1) + 'M</div>' +
+            '<div class="dept-cut">&minus;$<span id="amt-' + d.key + '">0.0</span>M</div>' +
+          '</div>' +
+        '</div>' +
+        '<input type="range" min="0" max="100" value="0" id="slider-' + d.key + '" />' +
+        '<div class="dept-pct"><span id="pct-' + d.key + '">0</span>% cut</div>';
+
+      container.appendChild(row);
+
+      var slider = row.querySelector('#slider-' + d.key);
+      slider.addEventListener('input', function (e) {
+        cuts[d.key] = Number(e.target.value);
+        updateRow(d.key);
+        updateSummary();
+      });
+    });
+  }
+
+  function updateRow(key) {
+    var d = DEPTS.find(function (x) { return x.key === key; });
+    var pct = Math.round(cuts[key] || 0);
+    var amt = (d.budget * (cuts[key] || 0)) / 100;
+    document.getElementById('amt-' + key).textContent = amt.toFixed(1);
+    document.getElementById('pct-' + key).textContent = pct;
+    var slider = document.getElementById('slider-' + key);
+    if (Number(slider.value) !== pct) slider.value = pct;
+  }
+
+  function updateSummary() {
+    var totalCut = 0;
+    DEPTS.forEach(function (d) {
+      totalCut += (d.budget * (cuts[d.key] || 0)) / 100;
+    });
+
+    var gapClosed = Math.min(totalCut, TARGET);
+    var gapClosedPct = Math.round((gapClosed / TARGET) * 100);
+    var poolUsedPct = Math.round((totalCut / POOL) * 100);
+    var reached = totalCut >= TARGET;
+    var remaining = Math.max(TARGET - totalCut, 0);
+
+    document.getElementById('totalCut').textContent = totalCut.toFixed(0);
+    document.getElementById('gapClosedPct').textContent = gapClosedPct;
+    document.getElementById('poolUsedPct').textContent = poolUsedPct;
+    document.getElementById('progressFill').style.width = gapClosedPct + '%';
+    document.getElementById('remaining').textContent = remaining.toFixed(0);
+    document.getElementById('reachedPoolPct').textContent = poolUsedPct;
+
+    document.getElementById('bannerReached').classList.toggle('hidden', !reached);
+    document.getElementById('bannerProgress').classList.toggle('hidden', reached);
+  }
+
+  function spreadEvenly() {
+    var evenPct = (TARGET / POOL) * 100;
+    DEPTS.forEach(function (d) {
+      cuts[d.key] = evenPct;
+      updateRow(d.key);
+    });
+    updateSummary();
+  }
+
+  function resetAll() {
+    DEPTS.forEach(function (d) {
+      cuts[d.key] = 0;
+      updateRow(d.key);
+    });
+    updateSummary();
+  }
+
+  buildRows();
+  updateSummary();
+</script>
+</body>
+</html>
